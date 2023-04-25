@@ -25,3 +25,21 @@ class Adam:
             self.v[i] += (1 - self.beta2) * (grads[i] ** 2 - self.v[i])
 
             params[i] -= lr_t * self.m[i] / (np.sqrt(self.v[i]) + 1e-7)
+
+
+class Momentum:
+    def __init__(self, lr=0.01, momentum=0.9):
+        self.lr = lr
+        self.momentum = momentum
+        self.v = None
+
+    def update(self, params, grads):
+        if self.v is None:
+            self.v = []
+            for param in params:
+                self.v.append(np.zeros_like(param))
+        
+        for idx, param in enumerate(params):
+            self.v[idx] = self.momentum * self.v[idx] - self.lr * grads[idx]
+            param += self.v[idx]
+
