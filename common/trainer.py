@@ -11,7 +11,7 @@ class Trainer:
         self.eval_interval = None
         self.current_epoch = 0
 
-    def fit(self, x, t, max_epoch=10, batch_size=32, max_grad=None, eval_interval=20):
+    def fit(self, x, t, max_epoch=10, batch_size=32, max_grad=None, eval_interval=5):
         data_size = len(x)
         max_iters = data_size // batch_size
         self.eval_interval = eval_interval

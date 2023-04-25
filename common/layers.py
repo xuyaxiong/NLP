@@ -44,6 +44,23 @@ class SoftmaxWithLoss:
         dx *= dout
         dx = dx / batch_size
         return dx
+    
+class SigmoidWithLoss:
+    def __init__(self):
+        self.params = []
+        self.grads = []
+        self.t = None
+        self.y = None
+
+    def forward(self, x, t):
+        self.t = t
+        self.y = 1 / (1 + np.exp(-x))
+        loss = cross_entropy_error(np.c_[1 - self.y, self.y], t)
+        return loss
+    
+    def backward(self, dout=1):
+        batch_size = self.t.shape[0]
+        return dout * (self.y - self.t) / batch_size
 
 
 class Embedding:
